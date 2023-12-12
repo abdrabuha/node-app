@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Node.js Server Communication with Bootstrap</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Abdrabuh App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/main">Add tasks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/showTasks">Show Tasks in JSON</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container mt-4">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title mb-4">To-Do Task</h5>
+        <!-- Form to add new task -->
+        <form id="taskForm">
+          <div class="mb-3">
+            <label for="taskName" class="form-label">Task Name</label>
+            <input type="text" class="form-control" id="taskName" required>
+          </div>
+          <div class="mb-3">
+            <label for="dueDate" class="form-label">Due Date</label>
+            <input type="date" class="form-control" id="dueDate" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Tasks</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Task Name</th>
+              <th scope="col">Due Date</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tasksTableBody">
+            <!-- Tasks will be populated here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      fetchAndDisplayTasks();
+
+      // Submit event for adding new task
+      document.getElementById('taskForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const taskName = document.getElementById('taskName').value;
+        const dueDate = document.getElementById('dueDate').value;
+        addNewTask({ taskName, dueDate });
+      });
+    });
+
+    async function fetchAndDisplayTasks() {
+      try {
+        const response = await fetch('/showTasks');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch tasks - ${response.status}`);
+        }
+        const tasks = await response.json();
+        console.log('Received tasks:', tasks);
+        displayTasks(tasks);
+      } catch (error) {
+        console.error('Error fetching tasks:', error.message);
+      }
+    }
+
+    function displayTasks(tasks) {
+      const tasksTableBody = document.getElementById('tasksTableBody');
+      tasksTableBody.innerHTML = ''; // Clear previous content
+
+      tasks.forEach(task => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${task.taskName}</td>
+          <td>${task.dueDate}</td>
+          <td><button class="btn btn-danger btn-sm" onclick="deleteTask('${task._id}')">Delete</button></td>
+        `;
+        tasksTableBody.appendChild(row);
+      });
+    }
+
+    async function addNewTask(task) {
+      try {
+        const response = await fetch('/addTask', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(task),
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to add task - ${response.status}`);
+        }
+        // Refresh tasks after addition
+        fetchAndDisplayTasks();
+      } catch (error) {
+        console.error('Error adding task:', error.message);
+      }
+    }
+
+    async function deleteTask(taskId) {
+      try {
+        const response = await fetch(`/deleteTask/${taskId}`, {
+          method: 'DELETE',
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to delete task - ${response.status}`);
+        }
+        // Refresh tasks after deletion
+        fetchAndDisplayTasks();
+      } catch (error) {
+        console.error('Error deleting task:', error.message);
+      }
+    }
+  </script>
+</body>
+
+</html>

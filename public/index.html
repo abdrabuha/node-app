@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Node.js Server Communication with Bootstrap</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Abdrabuh App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/main">Add tasks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/showTasks">Show Tasks in JSON</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page content -->
+  <div class="container mt-5">
+    <!-- Content will be loaded dynamically -->
+    <div id="content"></div>
+  </div>
+
+  <!-- Description Card -->
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">App Description</h5>
+        <p class="card-text">This app utilizes Bootstrap for the navigation bar and dynamic content loading. The 'loadContent()' function fetches content based on URL paths and updates the 'content' div without reloading the entire page. Navigation links trigger this function to display corresponding content.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and other scripts -->
+  <!-- Ensure to include jQuery and Popper.js before Bootstrap.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to load content dynamically based on URL
+    function loadContent(url) {
+      fetch(url)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('content').innerHTML = html;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  
+    // Load content only when the URL is not the index page
+    if (window.location.pathname !== '/') {
+      const pathname = window.location.pathname;
+      loadContent(pathname);
+  
+      // Update content when clicking navigation links
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          const href = this.getAttribute('href');
+          history.pushState({}, href, window.location.origin + href);
+          loadContent(href);
+        });
+      });
+    }
+  </script>
+  
+</body>
+</html>
