@@ -1,5 +1,8 @@
 # 📋 Node Task Manager · إدارة المهام (العربية / English)
 
+> ⭐ **ادعمنا بنجمة:** إذا أعجبك المشروع أو استفدت منه، لا تنسَ أن تمنحنا ⭐ نجمة — دعمك يصنع فرقاً كبيراً!
+> ⭐ **Give us a star:** if you like this project or learned something from it, please give us a ⭐ star — your support means a lot!
+
 > **The Why:** تطبيق ويب تعليمي كامل لتعلّم بناء REST API بإطار Express مع قاعدة بيانات MongoDB عبر Mongoose — تضيف المهام وتعرضها وتحذفها من واجهة ثنائية اللغة (عربي/إنجليزي)، في مثال CRUD واحد واضح ومعلّق.
 >
 > **The Why (EN):** a complete educational web app for learning REST APIs with Express and MongoDB via Mongoose — add, list, and delete tasks from a bilingual (AR/EN) interface, all in one clean, commented CRUD example.
