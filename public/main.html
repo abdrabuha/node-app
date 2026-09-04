@@ -1,147 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-  <title>Node.js Server Communication with Bootstrap</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasks · المهام</title>
+<style>
+  :root{--brand:#2563eb;--danger:#dc2626;--ok:#16a34a;--ink:#1f2937;--bg:#f5f7fb;--card:#fff;--line:#e5e7eb;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+  .wrap{max-width:720px;margin:0 auto;padding:2rem 1rem;}
+  header{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:1.8rem 1rem;text-align:center;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.4rem;margin-top:1.4rem;}
+  label{font-weight:600;display:block;margin-top:.7rem;}
+  input{width:100%;padding:.6rem .8rem;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:1rem;}
+  button{background:var(--brand);color:#fff;border:none;padding:.6rem 1.5rem;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;margin-top:1rem;}
+  button.danger{background:var(--danger);padding:.35rem .9rem;margin-top:0;}
+  .msg{margin-top:.8rem;font-weight:700;}
+  .msg.ok{color:var(--ok);} .msg.err{color:var(--danger);}
+  table{width:100%;border-collapse:collapse;margin-top:.8rem;}
+  th,td{border:1px solid var(--line);padding:.55rem .7rem;text-align:start;}
+  th{background:#eef2ff;color:var(--brand);}
+  .empty{color:#6b7280;text-align:center;padding:1rem;}
+  .back{display:inline-block;margin-top:1rem;color:var(--brand);text-decoration:none;font-weight:600;}
+</style>
 </head>
 <body>
-  <!-- Navigation bar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Abdrabuh App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/main">Add tasks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/showTasks">Show Tasks in JSON</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div class="container mt-4">
-    <div class="card mb-4">
-      <div class="card-body">
-        <h5 class="card-title mb-4">To-Do Task</h5>
-        <!-- Form to add new task -->
-        <form id="taskForm">
-          <div class="mb-3">
-            <label for="taskName" class="form-label">Task Name</label>
-            <input type="text" class="form-control" id="taskName" required>
-          </div>
-          <div class="mb-3">
-            <label for="dueDate" class="form-label">Due Date</label>
-            <input type="date" class="form-control" id="dueDate" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Add Task</button>
-        </form>
-      </div>
-    </div>
 
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Tasks</h5>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Task Name</th>
-              <th scope="col">Due Date</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="tasksTableBody">
-            <!-- Tasks will be populated here -->
-          </tbody>
-        </table>
-      </div>
-    </div>
+<header>
+  <h1>✅ المهام · Tasks</h1>
+  <p>أضف، اعرض، واحذف — Add, list and delete</p>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <h3 style="color:var(--brand);">➕ إضافة مهمة جديدة · Add a new task</h3>
+
+    <label for="taskName">اسم المهمة · Task Name</label>
+    <input id="taskName" type="text" placeholder="مثال: مراجعة درس Node.js" dir="auto">
+
+    <label for="dueDate">تاريخ الاستحقاق · Due Date</label>
+    <input id="dueDate" type="date">
+
+    <br>
+    <button onclick="addTask()">💾 إضافة · Add</button>
+    <p class="msg" id="msg"></p>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      fetchAndDisplayTasks();
+  <div class="card">
+    <h3 style="color:var(--brand);">📋 قائمة المهام · Task list</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>المهمة · Task</th>
+          <th>الاستحقاق · Due</th>
+          <th style="width:110px;">إجراء · Action</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty">لا توجد مهام بعد · No tasks yet</p>
+  </div>
 
-      // Submit event for adding new task
-      document.getElementById('taskForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        const taskName = document.getElementById('taskName').value;
-        const dueDate = document.getElementById('dueDate').value;
-        addNewTask({ taskName, dueDate });
+  <a class="back" href="/">← الرئيسية · Back to home</a>
+</div>
+
+<script>
+  async function loadTasks() {
+    try {
+      const res = await fetch("/getTasks");
+      const tasks = await res.json();
+      const rows = document.getElementById("rows");
+      rows.innerHTML = "";
+      const empty = document.getElementById("empty");
+      if (!tasks.length) { empty.style.display = "block"; return; }
+      empty.style.display = "none";
+      tasks.forEach(t => {
+        const tr = document.createElement("tr");
+        const date = new Date(t.dueDate);
+        const due = isNaN(date) ? t.dueDate : date.toISOString().slice(0, 10);
+        tr.innerHTML =
+          "<td>" + escapeHtml(t.taskName) + "</td>" +
+          "<td style='direction:ltr'>" + due + "</td>" +
+          "<td><button class='danger' onclick=\"deleteTask('" + t._id + "')\">حذف · Del</button></td>";
+        rows.appendChild(tr);
       });
-    });
-
-    async function fetchAndDisplayTasks() {
-      try {
-        const response = await fetch('/showTasks');
-        if (!response.ok) {
-          throw new Error(`Failed to fetch tasks - ${response.status}`);
-        }
-        const tasks = await response.json();
-        console.log('Received tasks:', tasks);
-        displayTasks(tasks);
-      } catch (error) {
-        console.error('Error fetching tasks:', error.message);
-      }
+    } catch (err) {
+      showMsg("خطأ في جلب المهام: " + err.message + " — هل الخادم و MongoDB يعملان؟", false);
     }
+  }
 
-    function displayTasks(tasks) {
-      const tasksTableBody = document.getElementById('tasksTableBody');
-      tasksTableBody.innerHTML = ''; // Clear previous content
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
 
-      tasks.forEach(task => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${task.taskName}</td>
-          <td>${task.dueDate}</td>
-          <td><button class="btn btn-danger btn-sm" onclick="deleteTask('${task._id}')">Delete</button></td>
-        `;
-        tasksTableBody.appendChild(row);
+  async function addTask() {
+    const taskName = document.getElementById("taskName").value.trim();
+    const dueDate = document.getElementById("dueDate").value;
+    if (!taskName || !dueDate) {
+      showMsg("⚠️ املأ اسم المهمة والتاريخ · Fill in task name and date", false);
+      return;
+    }
+    try {
+      const res = await fetch("/addTask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ taskName, dueDate })
       });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      document.getElementById("taskName").value = "";
+      document.getElementById("dueDate").value = "";
+      showMsg("✅ تمت الإضافة · Task added", true);
+      loadTasks();
+    } catch (err) {
+      showMsg("خطأ في الإضافة: " + err.message, false);
     }
+  }
 
-    async function addNewTask(task) {
-      try {
-        const response = await fetch('/addTask', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(task),
-        });
-        if (!response.ok) {
-          throw new Error(`Failed to add task - ${response.status}`);
-        }
-        // Refresh tasks after addition
-        fetchAndDisplayTasks();
-      } catch (error) {
-        console.error('Error adding task:', error.message);
-      }
+  async function deleteTask(id) {
+    if (!confirm("حذف هذه المهمة؟ · Delete this task?")) return;
+    try {
+      const res = await fetch("/deleteTask/" + id, { method: "DELETE" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      showMsg("🗑️ تم الحذف · Task deleted", true);
+      loadTasks();
+    } catch (err) {
+      showMsg("خطأ في الحذف: " + err.message, false);
     }
+  }
 
-    async function deleteTask(taskId) {
-      try {
-        const response = await fetch(`/deleteTask/${taskId}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) {
-          throw new Error(`Failed to delete task - ${response.status}`);
-        }
-        // Refresh tasks after deletion
-        fetchAndDisplayTasks();
-      } catch (error) {
-        console.error('Error deleting task:', error.message);
-      }
-    }
-  </script>
+  function showMsg(text, ok) {
+    const el = document.getElementById("msg");
+    el.className = "msg " + (ok ? "ok" : "err");
+    el.textContent = text;
+    setTimeout(() => { el.textContent = ""; }, 4000);
+  }
+
+  loadTasks();
+</script>
 </body>
-
 </html>

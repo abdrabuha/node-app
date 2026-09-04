@@ -1,83 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-  <title>Node.js Server Communication with Bootstrap</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Node Task Manager · إدارة المهام</title>
+<style>
+  :root{--brand:#2563eb;--ink:#1f2937;--muted:#6b7280;--bg:#f5f7fb;--card:#fff;--line:#e5e7eb;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+  .wrap{max-width:820px;margin:0 auto;padding:2rem 1rem;}
+  header{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:3rem 1rem;text-align:center;}
+  header h1{font-size:1.8rem;margin-bottom:.4rem;}
+  header p{opacity:.95;}
+  .cards{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1.8rem;}
+  .card{flex:1 1 240px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.4rem;}
+  .card h3{color:var(--brand);margin-bottom:.5rem;}
+  .card a{display:inline-block;margin-top:.7rem;color:#fff;background:var(--brand);text-decoration:none;
+          padding:.5rem 1.2rem;border-radius:999px;font-weight:700;}
+  h2{color:var(--brand);margin:2rem 0 .6rem;}
+  code{background:#eef2ff;color:var(--brand);padding:.1rem .4rem;border-radius:6px;}
+  table{width:100%;border-collapse:collapse;margin-top:.6rem;}
+  th,td{border:1px solid var(--line);padding:.5rem .7rem;text-align:start;}
+  th{background:#eef2ff;color:var(--brand);}
+  footer{margin-top:2.5rem;text-align:center;color:var(--muted);border-top:1px solid var(--line);padding-top:1.2rem;font-size:.92rem;}
+</style>
 </head>
 <body>
-  <!-- Navigation bar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Abdrabuh App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/main">Add tasks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/showTasks">Show Tasks in JSON</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
 
-  <!-- Page content -->
-  <div class="container mt-5">
-    <!-- Content will be loaded dynamically -->
-    <div id="content"></div>
-  </div>
+<header>
+  <h1>📋 Node Task Manager · إدارة المهام</h1>
+  <p>Express + MongoDB (Mongoose) — مثال عملي متكامل لتطبيق CRUD</p>
+  <p style="direction:ltr">A complete, bilingual CRUD example built with Express + Mongoose</p>
+</header>
 
-  <!-- Description Card -->
-  <div class="container mt-5">
+<div class="wrap">
+  <div class="cards">
     <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">App Description</h5>
-        <p class="card-text">This app utilizes Bootstrap for the navigation bar and dynamic content loading. The 'loadContent()' function fetches content based on URL paths and updates the 'content' div without reloading the entire page. Navigation links trigger this function to display corresponding content.</p>
-      </div>
+      <h3>✅ المهام · Tasks</h3>
+      <p>أضف مهمة، اعرضها، واحذفها — تجربة كاملة مع قاعدة بيانات حقيقية.</p>
+      <p style="direction:ltr">Add, list and delete tasks backed by a real database.</p>
+      <a href="/main">افتح المهام · Open Tasks</a>
+    </div>
+    <div class="card">
+      <h3>👤 عن المطوّر · About</h3>
+      <p>تعرّف على صاحب المشروع وخلفيته في هندسة الحاسب وأمن الذكاء الاصطناعي.</p>
+      <p style="direction:ltr">About the developer and his background.</p>
+      <a href="/about">اقرأ المزيد · Read more</a>
+    </div>
+    <div class="card">
+      <h3>🔌 API</h3>
+      <p>استخدم الواجهة مباشرة: <code>/getTasks</code>، <code>/addTask</code>، <code>/deleteTask/:id</code>.</p>
+      <p style="direction:ltr">Use the JSON API directly.</p>
+      <a href="/api/health" style="background:#16a34a;">health ✓</a>
     </div>
   </div>
 
-  <!-- Bootstrap JS and other scripts -->
-  <!-- Ensure to include jQuery and Popper.js before Bootstrap.js -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <h2>🛣️ المسارات · Routes</h2>
+  <table>
+    <thead><tr><th>Method</th><th>Path</th><th>الوظيفة · Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>GET</td><td><code>/</code></td><td>الصفحة الرئيسية · Landing page</td></tr>
+      <tr><td>GET</td><td><code>/main</code></td><td>صفحة المهام · Tasks page</td></tr>
+      <tr><td>GET</td><td><code>/about</code></td><td>صفحة "من أنا" · About page</td></tr>
+      <tr><td>GET</td><td><code>/getTasks</code></td><td>كل المهام JSON · All tasks as JSON</td></tr>
+      <tr><td>POST</td><td><code>/addTask</code></td><td>إضافة مهمة · Add a task</td></tr>
+      <tr><td>DELETE</td><td><code>/deleteTask/:id</code></td><td>حذف مهمة · Delete a task</td></tr>
+    </tbody>
+  </table>
+</div>
 
-  <script>
-    // Function to load content dynamically based on URL
-    function loadContent(url) {
-      fetch(url)
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('content').innerHTML = html;
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
-  
-    // Load content only when the URL is not the index page
-    if (window.location.pathname !== '/') {
-      const pathname = window.location.pathname;
-      loadContent(pathname);
-  
-      // Update content when clicking navigation links
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(event) {
-          event.preventDefault();
-          const href = this.getAttribute('href');
-          history.pushState({}, href, window.location.origin + href);
-          loadContent(href);
-        });
-      });
-    }
-  </script>
-  
+<footer>
+  © 2026 عبدربه العتيبي (Abdrabuh Alotaibi) · abdrabuha@outlook.com — MIT License
+</footer>
 </body>
 </html>

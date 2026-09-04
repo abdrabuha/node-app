@@ -1,18 +1,29 @@
 {
   "name": "node-app",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Bilingual (AR/EN) task manager built with Express + MongoDB (Mongoose) - CRUD example",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "test": "node --test"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "express",
+    "mongoose",
+    "mongodb",
+    "crud",
+    "tasks",
+    "education"
+  ],
+  "author": "Abdrabuh Alotaibi <abdrabuha@outlook.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "express": "^4.18.2",
-    "mongodb": "^6.3.0",
-    "mongoose": "^8.0.3"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.2.0"
   }
 }

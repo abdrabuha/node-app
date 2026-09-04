@@ -1,62 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-  <style>
-    .article-text {
-      font-family: 'Arial', sans-serif;
-      font-size: 18px;
-      line-height: 1.6;
-      text-align: justify;
-      color: #333;
-    }
-  </style>
-
-  <title>About</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About · من أنا</title>
+<style>
+  :root{--brand:#2563eb;--ink:#1f2937;--muted:#6b7280;--bg:#f5f7fb;--card:#fff;--line:#e5e7eb;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.9;}
+  .wrap{max-width:760px;margin:0 auto;padding:2.5rem 1rem;}
+  header{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:2.5rem 1rem;text-align:center;}
+  header h1{font-size:1.7rem;}
+  header p{opacity:.95;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.6rem;margin-top:1.5rem;}
+  h2{color:var(--brand);margin-bottom:.6rem;}
+  ul{margin:0 0 .5rem 1.3rem;}
+  li{margin:.25rem 0;}
+  .back{display:inline-block;margin-top:1.4rem;color:var(--brand);text-decoration:none;font-weight:600;}
+  footer{margin-top:2rem;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:1.2rem;}
+</style>
 </head>
 <body>
-  <!-- Navigation bar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Abdrabuh App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/main">Add tasks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/showTasks">Show Tasks in JSON</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div class="container mt-4">
-    <div class="card mb-4">
-      <div class="card-body">
-         <p class="card-text article-text">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abdrabuh Alotaibi is a multifaceted individual whose life intertwines the worlds of sports, programming, education, and family. With a relentless drive to learn, evolve, and contribute to the world, he embodies a spirited pursuit of knowledge and innovation.
-          <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Abdrabuh’s journey begins with a profound love for sports—a passion that fuels his spirit and enriches his life. Whether it’s the adrenaline rush on the field or the camaraderie within a team, sports have been an integral part of his identity. Beyond the physical aspects, sports instill invaluable lessons in discipline, teamwork, and perseverance, shaping Abdrabuh’s character both on and off the field.
-          <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;However, his curiosity extends far beyond the realm of sports. Abdrabuh is deeply immersed in the world of programming, where he finds solace in the art of coding and problem-solving. Through his dedication to programming, he explores the infinite possibilities that technology offers. With a thirst for knowledge and a keen eye for innovation, he actively engages in researching new technologies, constantly seeking ways to push the boundaries of what's possible.
-          <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Education is not just a career path for Abdrabuh; it's a way of life. He finds immense joy in sharing his expertise and insights with others, cultivating a culture of learning and growth. Teaching becomes an avenue through which he imparts not only knowledge but also a passion for discovery. His commitment to education extends beyond formal settings, as he embraces self-development and continuous learning as fundamental principles.
-          <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Amidst his pursuits, Abdrabuh cherishes his roles as a parent to two wonderful children, Naif and Alya. Their presence enriches his life and serves as a constant reminder of love, responsibility, and the joys of parenthood. His dedication to his children echoes his commitment to nurturing, guiding, and supporting their growth into compassionate and capable individuals.
-          <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abdrabuh Alotaibi stands as a testament to the harmonious blend of passions, aspirations, and responsibilities. He embodies the ethos of continual self-improvement, whether through embracing new challenges, delving into technological advancements, nurturing young minds, or celebrating the joys of family life. With an unwavering dedication to personal growth and a profound love for his family, Abdrabuh embraces life’s varied facets, leaving an indelible mark wherever he goes.
-        </p>
-      </div>
-    </div>
+
+<header>
+  <h1>👤 عبدربه العتيبي · Abdrabuh Alotaibi</h1>
+  <p>مهندس حاسب · رئيس قسم تقنية الحاسب · أمن تعلّم الآلة والذكاء الاصطناعي</p>
+  <p style="direction:ltr">Computer Engineer · Head of Computer Technology · ML Security &amp; AI</p>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <h2>📄 نبذة · About</h2>
+    <p>
+      <strong>العربية:</strong> مهندس حاسب ومحاضر تقني حاصل على ماجستير هندسة الحاسب من
+      George Mason University، ومتخصص في <strong>أمن تعلّم الآلة</strong> (الهجمات العدائية
+      والدفاعات) وإنترنت الأشياء وهندسة الشبكات. يشغل حالياً منصب <strong>رئيس قسم تقنية
+      الحاسب</strong>، ويجمع بين التطوير العملي والتعليم التقني لبناء أنظمة ذكية آمنة.
+    </p>
+    <p>
+      <strong>English:</strong> A Computer Engineer and educator with an M.Sc. from George Mason
+      University, specialised in <strong>Machine Learning Security</strong> (adversarial attacks
+      &amp; defenses), IoT, and enterprise networking. Currently Head of the Computer Technology
+      Department — passionate about building safe, scalable AI systems and teaching others.
+    </p>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <div class="card">
+    <h2>🔬 المجالات · Focus areas</h2>
+    <ul>
+      <li><strong>AI &amp; ML Security</strong> — Adversarial attacks &amp; defenses, robustness, privacy</li>
+      <li><strong>Programming</strong> — Python · JavaScript/Node.js · PHP · HTML · C#</li>
+      <li><strong>Frameworks</strong> — Express · Flutter · Telegram Bot API · Firebase</li>
+      <li><strong>Infrastructure</strong> — MongoDB · MySQL · Linux (Ubuntu/Samba AD) · Git</li>
+    </ul>
+    <p style="direction:ltr">💡 <a href="https://github.com/abdrabuha" target="_blank" rel="noopener">github.com/abdrabuha</a> · abdrabuha@outlook.com</p>
+  </div>
 
+  <a class="back" href="/">← الرئيسية · Back to home</a>
+</div>
+
+<footer>
+  © 2026 عبدربه العتيبي (Abdrabuh Alotaibi) · abdrabuha@outlook.com — MIT License
+</footer>
 </body>
-
 </html>
